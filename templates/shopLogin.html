@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>用户登录 - 小憨堡</title>
+        <script src="static/js/jquery-3.2.1.js"></script>
+        <link rel="stylesheet" href="static/bootstrap-3.3.7-dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="static/css/style.css" />
+        <script src="static/js/jquery.cookie.js"></script>
+
+    </head>
+    <body>
+        <div class="login-bg">
+            <div class="login-logo"></div>
+            <div class="col-md-3 login">
+                <div class="login-header">登录</div>
+                <div class="form-group">
+                    <div class="login-input form-inline">电话：</div>
+                    <div class="login-text form-inline"><input class="form-control" type="text" id="username" /></div>
+                </div>
+                <div class="form-group">
+                    <div class="login-input form-inline">密码：</div>
+                    <div class="login-text form-inline"><input class="form-control" type="password" id="password" /></div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input class="btn btn-success form-control" id="submit_btn" value="登录"/>
+                </div>
+            </div>
+        </div>
+    <script>
+            $("#submit_btn").click(function () {
+                //console.log("111");
+                //trigger 事件执行完后，浏览器会为submit按钮获得焦点
+                var mobile = $("#username").val();
+                var password = $("#password").val();
+                //console.log((mobile + " " + password));/
+                //alert(mobile + " " + password);
+                    $.ajax({
+                        type: "post",
+                        url: "http://127.0.0.1:8000/order/login/",
+                        data: {
+                            mobile: mobile,
+                            password: password,
+                        },
+                        dataType: "json",
+                        crossDomain: true,
+                        success: function (result) {
+                             //alert(result)
+                            if (result.code == 200) {
+                                //console.log(result);
+                                $.cookie("shopId", result.data.id);
+                                window.location.href="order.html";
+                            } else {
+                                alert(result.msg)
+                            }
+                        },
+                        error: function () {
+                            console.log('出现错误！')
+                        }
+                    });
+            });
+        </script>
+    </body>
+</html>

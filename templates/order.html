@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>订单总览 - 外卖下单管理系统</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <link href="static/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <link href="static/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="static/css/style.min.css" rel="stylesheet">
+    <script type="text/javascript" src="static/js/jquery-3.2.1.js"></script>
+    <script src="static/js/order.js"></script>
+</head>
+
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--左侧导航-->
+        <aside class="lyear-layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <a href="index.html"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear"/></a>
+            </div>
+            <div class="lyear-layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-account-check"></i>订单管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="order.html">订单总览</a></li>
+                                <li><a href="order_detail.html">订单详情</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-account"></i>菜品管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="category.html">菜品表</a></li>
+                                <li><a href="dish.html">菜品管理</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <p class="copyright">Copyright &copy; 2021. haining</p>
+                </div>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="lyear-layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="lyear-aside-toggler">
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 订单总览 </span>
+                    </div>
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <img class="img-avatar img-avatar-48 m-r-10" src="static/images/users/logo.jpeg" alt="管理员"/>
+                                <span id="admin">管理员 <span class="caret"></span></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+                                <li class="divider"></li>
+                                <li><a href="orderLogin.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="lyear-layout-content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>订单总览</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="orderId" name="orderId"
+                                               placeholder="请输入订单号或买家名">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-default" id="btnlog" onclick="resetPage();search();">查询</button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="order">
+                                        <thead>
+                                        <tr>
+                                            <td>#</td>
+                                            <td>买家名</td>
+                                            <td>买家手机号</td>
+                                            <td>买家地址</td>
+                                            <td>订单总金额</td>
+                                            <td>订单状态</td>
+                                            <td>创建时间</td>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="pagemodel">
+                                    <button type="button" onclick="miss(this)" class="btn btn-default">首页</button>
+                                    <button type="button" onclick="miss(this)" class="btn btn-default">上一页</button>
+                                    <button type="button" onclick="miss(this)" class="btn btn-default">下一页</button>
+                                    <button type="button" onclick="miss(this)" class="btn btn-default">尾页</button>
+                                    <label id="showpage"></label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!--End 页面主要内容-->
+    </div>
+</div>
+
+<script type="text/javascript" src="static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="static/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="static/js/main.min.js"></script>
+<script type="text/javascript" src="static/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+<script>
+    window.onload=function(){
+        let shopId=$.cookie("shopId");
+        $.ajax({
+            url:"http://127.0.0.1:8000/order/getOrder/",
+            type:"get",
+            data:{
+                id:shopId,
+            },
+            success:function (result) {
+                console.log(result);
+                if(result.code==200) {
+                    let parent = document.getElementById("tbody");
+                    for(let i=0;i<result.data.length;i++){
+                        let tr = document.createElement("tr");
+
+                        tr.innerHTML = "<td>#</td>\n" +
+                            " <td>"+result.data[i].username+"</td>\n" +
+                            " <td>"+result.data[i].user_mobile+"</td>\n" +
+                            " <td>"+result.data[i].address+"</td>\n" +
+                            " <td>"+result.data[i].pay_money+"</td>\n" +
+                            " <td>"+result.data[i].status+"</td>\n" +
+                            " <td>"+result.data[i].add_time+"</td>\n"+
+                            " <td><input type=\"submit\" class=\"submit_btn\" id=\"btnSubmit\" value=\"接单\" onclick='acceptOrder(this)'></td>"
+                        tr.id=result.data[i].id;
+                        parent.appendChild(tr);
+                    }
+
+                }
+            },
+            error:function (error) {
+                console.log(error.msg);
+            }
+        })
+
+
+    }
+ function acceptOrder(obj){
+        let orderId=obj.parentNode.parentNode.id;
+        console.log(orderId);
+        $.ajax({
+            url:"http://127.0.0.1:8000/order/getOrder/",
+            type:"put",
+            data:{
+                orderId:orderId,
+            },
+            success:function (result) {
+                console.log(result);
+                if(result.code==200) {
+                    obj.value=result.data;
+                    obj.disabled=true;
+                }
+            },
+            error:function (error) {
+                console.log(error.msg);
+            }
+        })
+
+    }
+</script>
+</body>
+</html>

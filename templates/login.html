@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>登陆</title>
+	<link rel="stylesheet" href="static/assets/libs/particles/css/style.css">
+	<link rel="stylesheet" href="static/assets/css/base.css">
+	<link rel="stylesheet" href="static/assets/css/login.css" />
+</head>
+<body>
+	<!-- particles.js container -->
+	<div id="particles-js"></div>
+	<div id="wrapper">
+		<div>
+			<img src="static/assets/img/img.png" />
+			<h2>舌尖上的外卖，期待你与美食的偶遇</h2>
+		</div>
+		<nav class="switch_nav">
+			<a href="register.html" id="switch_signup" class="switch_btn">注册</a>
+			<a href="javascript:;" id="switch_login" class="switch_btn on">登陆</a>
+			<div class="switch_bottom" id="switch_bottom"></div>
+		</nav>
+		<div id="login">
+			<div>
+				<ul class="group_input">
+					<li>
+						<input type="text" class="mobile required" id="mobile" placeholder="手机号或邮箱" name="mobile"/>
+					</li>
+					<li>
+						<input type="password" class="psd required" id="password" placeholder="密码" name="password"/>
+					</li>
+				</ul>
+				<input type="submit" class="submit_btn" id="btnSubmit" value="登陆" style="text-align: center" >
+			</div>
+			<div class="states">
+				<span class="left"><a href="javascript:;">手机验证码登陆</a></span>
+				<span class="right"><a href="javascript:;">无法登陆？</a></span>
+			</div>
+<!--			<div class="states">-->
+<!--&lt;!&ndash;				<a href="javascript:;" class="social_account">社交账号登陆</a>&ndash;&gt;-->
+<!--				<div class="states three_MinIcon">-->
+<!--					<a href="javascript:;" class="MinIcon_weixin"><img src="../assets/img/icon_weixin.jpg" style="width:20px;height:18px" /></a>-->
+<!--					<a href="javascript:;" class="MinIcon_weibo"><img src="../assets/img/icon_weibo.jpg" style="width:20px;height:18px" /></a>-->
+<!--					<a href="javascript:;" class="MinIcon_qq"><img src="../assets/img/icon_qq.jpg" style="width:20px;height:18px" /></a>-->
+<!--				</div>-->
+<!--			</div>-->
+		</div>
+<!--		<div class="QRcode_btn">-->
+<!--			<div type="submit" class="submit_btn download_btn">下载知乎App</div>-->
+<!--			<div class="QRcode">-->
+<!--				<img src="../assets/img/QRcode.png" alt="QRcode" />-->
+<!--				<div class="box"></div>-->
+<!--			</div>-->
+
+<!--		</div>-->
+		<div id="footer">
+			<span>&copy;2021外卖</span><span>·</span><a href="javascript:;">外卖用户</a><span>·</span><a href="javascript:;">发现</a><span>·</span><a href="javascript:;">web应用</a><span>·</span><a href="javascript:;">使用机构账号登录</a><span>·</span><a href="javascript:;">联系我们</a><span>·</span><a href="javascript:;"></a><br />
+			<span>·</span><a href="javascript:;">京ICP证110745号</a><span>·</span><span>京公网安备11010802010035号</span><span>·</span><a href="javascript:;">出版物经营许可证</a>
+		</div>
+	</div>
+	<script src="static/assets/libs/jquery-1.12.4/jquery.min.js"></script>
+	<script src="static/assets/libs/particles/particles.min.js"></script>
+	<script src="static/assets/libs/particles/js/app.js"></script>
+    <script src="static/js/jquery.cookie.js"></script>
+
+	<script>
+
+
+            $(".submit_btn").click(function () {
+                //trigger 事件执行完后，浏览器会为submit按钮获得焦点
+                var mobile = $("#mobile").val();
+                var password = $("#password").val();
+                //console.log((mobile + " " + password));
+                //alert(mobile + " " + password);
+                    $.ajax({
+                        type: "post",
+                        url: "http://127.0.0.1:8000/user/login/",
+                        data: {
+                            mobile: mobile,
+                            password: password,
+                        },
+                        dataType: "json",
+                        crossDomain: true,
+                        success: function (result) {
+                             //alert(result)
+                            if (result.code == 200) {
+                                //console.log(result);
+                                $.cookie("userId", result.data.id);
+                                window.location.href="menu.html";
+                            } else {
+                                alert(result.msg)
+                            }
+                        },
+                        error: function () {
+                            console.log('出现错误！')
+                        }
+                    });
+            });
+
+
+	</script>
+</body>
+</html>
